@@ -1,0 +1,115 @@
+//--------------------------------ADMIN CODE FOR PHARMACY MANAGEMENT SYSTEM-------------------------//
+import java.util.*;
+
+public class PharmaceuticalApp {
+
+    private int medicineCount = 0;
+    private Medicine[] medicines = new Medicine[100];
+
+    private void addMedicine() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter medicine name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter medicine price: ");
+        double price = scanner.nextDouble();
+        scanner.nextLine();
+        medicines[medicineCount++] = new Medicine(name, price);
+        System.out.println("Medicine added successfully!");
+    }
+
+    private void viewMedicines() {
+        if (medicineCount == 0) {
+            System.out.println("No medicines available.");
+            return;
+        }
+        System.out.println("Available Medicines:");
+        for (int i = 0; i < medicineCount; i++) {
+            System.out.println(medicines[i]);
+        }
+    }
+
+    private void deleteMedicine() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter medicine name to delete: ");
+        String name = scanner.nextLine();
+        for (int i = 0; i < medicineCount; i++) {
+            if (medicines[i].getName().equals(name)) {
+                for (int j = i; j < medicineCount - 1; j++) {
+                    medicines[j] = medicines[j + 1];
+                }
+                medicines[--medicineCount] = null;
+                System.out.println("Medicine deleted successfully!");
+                return;
+            }
+        }
+        System.out.println("Medicine not found.");
+    }
+
+    private static class Medicine {
+        private final String name;
+        private final double price;
+
+        public Medicine(String name, double price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public String toString() {
+            return "Medicine{" +
+                    "name='" + name + '\'' +
+                    ", price=" + price +
+                    '}';
+        }
+    }
+
+    private void Main() {
+        while (true) {
+
+            System.out.println("/////-----Pharmaceutical App-----/////");
+            System.out.println("1. Add Medicine");
+            System.out.println("2. View Medicines");
+            System.out.println("3. Delete Medicine");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+
+            Scanner scanner = new Scanner(System.in);
+            int option = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (option) {
+                case 1:
+                    addMedicine();
+                    break;
+                case 2:
+                    viewMedicines();
+                    break;
+                case 3:
+                    deleteMedicine();
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    break;
+            }
+            if(option==4){
+                break;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        PharmaceuticalApp app = new PharmaceuticalApp();
+        app.Main();
+    }
+}
+
+CODE EXPLAINATION:
+The `PharmaceuticalApp` is a Java console application that manages a list of medicines, allowing users to add, view, and delete entries. It uses an array of `Medicine` objects, with a maximum capacity of 100. The `addMedicine()` function prompts users for a medicine's name and price, creates a new `Medicine` object, and adds it to the array while updating the count. The `viewMedicines()` function displays all available medicines or informs the user if none are present. The `deleteMedicine()` function searches for a medicine by name, removes it if found, and shifts subsequent elements in the array, notifying the user of the deletion. The `Main()` method contains a loop that presents a menu for the user to select an action, calling the appropriate function based on input, and exits when the user chooses to do so. Overall, the app provides a simple interface for basic CRUD operations on a fixed-size list of medicines.
+-------------------------------------------------------------------------------------------------------------
